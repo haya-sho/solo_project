@@ -6,9 +6,11 @@ import { Search } from "./Search";
 export const Method = () => {
   return (
     <>
-      <div className="method">Let's choose!!</div>
-      <Search />
-      <Random />
+      <div className="method">
+        Let's choose!!
+        <Search />
+        <Random />
+      </div>
     </>
   );
 };
