@@ -30,9 +30,10 @@
     "eject": "react-scripts eject",
     "makeMigration": "knex migrate:make",
     "makeSeed": "knex seed:make",
-    "migrate": "knex migrate:latest",
-    "seed": "knex seed:run",
-    "rollback": "knex migrate:rollback"
+    "rollback": "knex migrate:rollback",
+    "s-start": "nodemon server.js",
+    "migrate": "knex migrate:latest --knexfile ./knexfile.js",
+    "seed": "knex seed:run --knexfile ./knexfile.js"
   },
   "eslintConfig": {
     "extends": [
