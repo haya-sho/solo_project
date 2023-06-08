@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "../styles/list.css";
 import randomImage from "../img/random.png";
+
 export const URL =
   process.env.NODE_ENV === "production"
     ? //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -18,6 +19,10 @@ const List = (props) => {
         //allMenuをgetDataとする
         //全てのオブジェクトが入った配列
       });
+  };
+  //imageのリンクをる
+  const getImageSource = (imageName) => {
+    return require(`../img/${imageName}.png`).default;
   };
 
   // let patchCheck;
@@ -86,6 +91,8 @@ const List = (props) => {
     //allMenuはオブジェクトが入った配列
     props.allMenu.forEach((value) => {
       if (value.isWaiting === true) {
+        //imageのリンクをimageSrcに入れる
+        // const imageSrc = getImageSource(value.image);
         console.log(value);
         elementsArr.push(
           <div className="list" key={value.id}>
@@ -93,6 +100,12 @@ const List = (props) => {
             <ul>
               <li>{value.menu}</li>
             </ul>
+            <div className="list" key={value.id}>
+              {/* <div className="image-container">
+                <img src={imageSrc} alt="menu" className="menu-image" />
+              </div> */}
+              <div className="menu-name">{value.menu}</div>
+            </div>
           </div>
         );
       }

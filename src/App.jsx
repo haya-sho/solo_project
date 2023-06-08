@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./components/Header";
 // import Method from "./components/Method";
 import List from "./components/List";
-
+console.log(process.env.NODE_ENV);
 export default function App() {
   const [allMenu, allMenuSet] = useState([]);
   return (
