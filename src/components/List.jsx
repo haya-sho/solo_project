@@ -20,10 +20,6 @@ const List = (props) => {
         //全てのオブジェクトが入った配列
       });
   };
-  //imageのリンクをる
-  const getImageSource = (imageName) => {
-    return require(`../img/${imageName}.png`).default;
-  };
 
   // let patchCheck;
 
@@ -65,6 +61,11 @@ const List = (props) => {
       });
   };
 
+  //imageのリンクをる
+  const getImageSource = (imageName) => {
+    return require(`../img/${imageName}.png`);
+  };
+
   const menuView = () => {
     const elementsArr = [
       <div className="method" key="method">
@@ -92,19 +93,16 @@ const List = (props) => {
     props.allMenu.forEach((value) => {
       if (value.isWaiting === true) {
         //imageのリンクをimageSrcに入れる
-        // const imageSrc = getImageSource(value.image);
-        console.log(value);
+        const imageSrc = getImageSource(value.image);
         elementsArr.push(
           <div className="list" key={value.id}>
-            menu
             <ul>
               <li>{value.menu}</li>
             </ul>
             <div className="list" key={value.id}>
-              {/* <div className="image-container">
+              <div className="image-container">
                 <img src={imageSrc} alt="menu" className="menu-image" />
-              </div> */}
-              <div className="menu-name">{value.menu}</div>
+              </div>
             </div>
           </div>
         );

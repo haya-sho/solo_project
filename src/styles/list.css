@@ -1,3 +1,11 @@
+.image-container {
+  width: 100px; /* ボックスの幅を指定 */
+  height: 100px; /* ボックスの高さを指定 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .method {
   background-color: #e08e6d;
   color: #fffaf4;
@@ -6,8 +14,20 @@
 }
 
 .list {
+  display: inline-block;
   background-color: #f6c391;
   color: #fffaf4;
   font-family: "Special Elite", cursive;
   font-size: 10px;
+  width: 150px;
+  margin-right: 10px; /* リスト間の間隔を設定 */
+  margin-bottom: 10px; /* 下方向の余白を設定 */
+}
+
+.list ul li {
+  color: black;
+}
+.menu-image {
+  width: 100px; /* 画像の幅を指定 */
+  height: auto; /* 高さは自動調整 */
 }
