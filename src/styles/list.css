@@ -1,3 +1,10 @@
+.method {
+  background-color: #e08e6d;
+  color: #fffaf4;
+  font-family: "Special Elite", cursive;
+  font-size: 10px;
+}
+
 .list {
   background-color: #f6c391;
   color: #fffaf4;

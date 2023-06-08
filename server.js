@@ -5,7 +5,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 
-const knex = require("knex")({
+//knexを使ってdbに接続
+const db = require("knex")({
   client: "pg",
   connection: process.env.DATABASE_URL || {
     host: "127.0.0.1",
@@ -23,13 +24,58 @@ app.use(express.static(buildPath));
 app.use(express.json());
 app.use(cors());
 
+//接続したdbから情報を取る
+//JON形式でAllMenuObjを返す
 app.get("/table", async (req, res) => {
   console.log("get受信");
   const AllMenu = () => {
-    return knex.select("*").from("menu_list");
+    return db.select("*").from("menu_list");
   };
   const AllMenuObj = await AllMenu();
   res.status(200).json(AllMenuObj);
+});
+
+//ボタンを押した時に、条件以外のもののテーブルデータを書き換えたい
+app.put("/table/riceIsWaiting", async (req, res) => {
+  try {
+    //一旦全てリセットする処理
+    await db("menu_list").update({ isWaiting: true });
+    // "ごはん"以外の項目のisWaitingをfalseに書き換える処理
+    await db("menu_list")
+      .where("category", "!=", "ごはん")
+      .update({ isWaiting: false });
+
+    res.status(200).json({ message: "isWaitingがセットされました。" });
+  } catch (error) {
+    res.status(500).json({ error: "データの更新に失敗しました。" });
+  }
+});
+
+app.put("/table/pastaIsWaiting", async (req, res) => {
+  try {
+    //一旦全てリセットする処理
+    await db("menu_list").update({ isWaiting: true });
+    // "パスタ"以外の項目のisWaitingをfalseに書き換える処理
+    await db("menu_list")
+      .update({ isWaiting: true })
+      .where("category", "!=", "パスタ")
+      .update({ isWaiting: false });
+
+    res.status(200).json({ message: "isWaitingがセットされました。" });
+  } catch (error) {
+    res.status(500).json({ error: "データの更新に失敗しました。" });
+  }
+});
+
+app.put("/table/resetIsWaiting", async (req, res) => {
+  try {
+    // "ごはん"以外の項目のisWaitingをfalseに書き換える処理
+    await db("menu_list").update({ isWaiting: true });
+
+    res.status(200).json({ message: "isWaitingがリセットされました。" });
+  } catch (error) {
+    res.status(500).json({ error: "データの更新に失敗しました。" });
+  }
 });
 
 // app.patch("/table/:id", async (req, res) => {
