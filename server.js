@@ -57,7 +57,6 @@ app.put("/table/pastaIsWaiting", async (req, res) => {
     await db("menu_list").update({ isWaiting: true });
     // "パスタ"以外の項目のisWaitingをfalseに書き換える処理
     await db("menu_list")
-      .update({ isWaiting: true })
       .where("category", "!=", "パスタ")
       .update({ isWaiting: false });
 
@@ -73,6 +72,31 @@ app.put("/table/resetIsWaiting", async (req, res) => {
     await db("menu_list").update({ isWaiting: true });
 
     res.status(200).json({ message: "isWaitingがリセットされました。" });
+  } catch (error) {
+    res.status(500).json({ error: "データの更新に失敗しました。" });
+  }
+});
+app.put("/table/random", async (req, res) => {
+  try {
+    // 全てのレコードのisWaitingをfalseに書き換える
+    await db("menu_list").update({ isWaiting: false });
+
+    // ランダムな1つのレコードを選択する
+    const records = await db("menu_list").select("id");
+    const randomRecord = records[Math.floor(Math.random() * records.length)];
+
+    if (randomRecord) {
+      //ランダムに選ばれたidを選択してその項目のisWaitingのみtrueにする
+      await db("menu_list")
+        .where({ id: randomRecord.id })
+        .update({ isWaiting: true });
+
+      res.status(200).json({ message: "isWaitingがセットされました。" });
+    } else {
+      res
+        .status(404)
+        .json({ error: "該当するレコードが見つかりませんでした。" });
+    }
   } catch (error) {
     res.status(500).json({ error: "データの更新に失敗しました。" });
   }

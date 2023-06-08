@@ -28,9 +28,6 @@ const List = (props) => {
   }, []);
   console.log(props.allMenu);
 
-  const myFunction = () => {
-    console.log("CLICKED");
-  };
   const riceClickAction = () => {
     console.log(URL);
     fetch(`${URL}/table/riceIsWaiting`, { method: "PUT" })
@@ -55,6 +52,14 @@ const List = (props) => {
       });
   };
 
+  const randomAction = () => {
+    fetch(`${URL}/table/random`, { method: "PUT" })
+      .then((res) => res.json())
+      .then(() => {
+        getDataFunc(props.allMenuSet);
+      });
+  };
+
   const menuView = () => {
     const elementsArr = [
       <div className="method" key="method">
@@ -69,7 +74,12 @@ const List = (props) => {
           全て
         </button>
         <button>
-          <img src={randomImage} alt="random" onClick={myFunction} />
+          <img
+            src={randomImage}
+            alt="random"
+            className="transparent-image"
+            onClick={randomAction}
+          />
         </button>
       </div>,
     ];
