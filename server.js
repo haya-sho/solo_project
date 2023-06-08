@@ -102,21 +102,6 @@ app.put("/table/random", async (req, res) => {
   }
 });
 
-// app.patch("/table/:id", async (req, res) => {
-//   console.log("patch受信");
-//   const patchData = req.body;
-//   console.log(patchData.comment);
-
-//   const AllPokemon2 = (id, comment) => {
-//     return knex
-//       .from("products")
-//       .where("id", "=", id)
-//       .update({ comment: comment, isWaiting: false });
-//   };
-//   const AllpokemonObj = await AllPokemon2(patchData.id, patchData.comment);
-//   res.sendStatus(200);
-// });
-
 // app.post("/table", async (req, res) => {
 //   console.log("post受信");
 //   const patchData = req.body;

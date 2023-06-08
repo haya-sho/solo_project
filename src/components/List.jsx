@@ -93,7 +93,10 @@ const List = (props) => {
     props.allMenu.forEach((value) => {
       if (value.isWaiting === true) {
         //imageのリンクをimageSrcに入れる
-        const imageSrc = getImageSource(value.image);
+        const imageSrc =
+          getImageSource(value.image) !== undefined
+            ? getImageSource(value.image)
+            : "../img/sample.png";
         elementsArr.push(
           <div className="list" key={value.id}>
             <ul>
