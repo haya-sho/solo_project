@@ -87,6 +87,22 @@ const List = (props) => {
             onClick={randomAction}
           />
         </button>
+        <br></br>
+        <label>✏︎✏︎✏︎add menu✏︎✏︎✏︎</label>
+        <input
+          placeholder="menu"
+          // value={inputMenu}
+          // onChange={(e) => setmenu(e.target.value)}
+        />
+        <input
+          placeholder="category"
+          // value={unputCategory}
+          // onChange={(e) => setCategory(e.target.value)}
+        />
+        <button type="submit">
+          {/* onClick={updateAPIData} */}
+          Add
+        </button>
       </div>,
     ];
     //allMenuはオブジェクトが入った配列
