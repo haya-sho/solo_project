@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/list.css";
 import randomImage from "../img/random.png";
 
@@ -10,6 +10,8 @@ export const URL =
       "http://localhost:8080";
 
 const List = (props) => {
+  const [inputMenu, setInputMenu] = useState(""); // 追加
+  const [inputCategory, setInputCategory] = useState(""); // 追加
   //この関数を実行すると指定したURLにGETリクエストを送る
   const getDataFunc = async () => {
     fetch(`${URL}/table`, { method: "GET" })
@@ -32,6 +34,14 @@ const List = (props) => {
   const riceClickAction = () => {
     console.log(URL);
     fetch(`${URL}/table/riceIsWaiting`, { method: "PUT" })
+      .then((res) => res.json())
+      .then(() => {
+        getDataFunc(props.allMenuSet);
+      });
+  };
+  const menClickAction = () => {
+    console.log(URL);
+    fetch(`${URL}/table/menIsWaiting`, { method: "PUT" })
       .then((res) => res.json())
       .then(() => {
         getDataFunc(props.allMenuSet);
@@ -66,6 +76,34 @@ const List = (props) => {
     return require(`../img/${imageName}.png`);
   };
 
+  const updateAPIData = (e) => {
+    e.preventDefault();
+
+    // フォームのデータを使ってサーバーにレシピを追加する処理を実装する
+    const newRecipe = {
+      menu: inputMenu,
+      category: inputCategory,
+      isWaiting: true,
+    };
+    console.log(newRecipe);
+    fetch(`${URL}/table/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newRecipe),
+    })
+      .then((data) => {
+        console.log(data); // レシピの追加が成功した場合の処理
+        // フォームをリセットする
+        setInputMenu("");
+        setInputCategory("");
+      })
+      .catch((error) => {
+        console.error(error); // レシピの追加が失敗した場合の処理
+      });
+  };
+
   const menuView = () => {
     const elementsArr = [
       <div className="method" key="method">
@@ -73,12 +111,17 @@ const List = (props) => {
         <button id="rice" onClick={riceClickAction}>
           ごはん
         </button>
+        <button id="men" onClick={menClickAction}>
+          麺類
+        </button>
         <button id="pasta" onClick={pastaClickAction}>
           パスタ
         </button>
-        <button id="reset" onClick={resetAction}>
-          全て
+        <button className="all" id="reset" onClick={resetAction}>
+          全部
         </button>
+        <br></br>
+        <label>Random</label>
         <button>
           <img
             src={randomImage}
@@ -88,19 +131,20 @@ const List = (props) => {
           />
         </button>
         <br></br>
+        <br></br>
+        <br></br>
         <label>✏︎✏︎✏︎add menu✏︎✏︎✏︎</label>
         <input
           placeholder="menu"
-          // value={inputMenu}
-          // onChange={(e) => setmenu(e.target.value)}
+          value={inputMenu}
+          onChange={(e) => setInputMenu(e.target.value)}
         />
         <input
           placeholder="category"
-          // value={unputCategory}
-          // onChange={(e) => setCategory(e.target.value)}
+          value={inputCategory}
+          onChange={(e) => setInputCategory(e.target.value)}
         />
-        <button type="submit">
-          {/* onClick={updateAPIData} */}
+        <button type="submit" onClick={updateAPIData}>
           Add
         </button>
       </div>,

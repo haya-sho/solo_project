@@ -66,6 +66,21 @@ app.put("/table/pastaIsWaiting", async (req, res) => {
   }
 });
 
+app.put("/table/menIsWaiting", async (req, res) => {
+  try {
+    //一旦全てリセットする処理
+    await db("menu_list").update({ isWaiting: true });
+    // "パスタ"以外の項目のisWaitingをfalseに書き換える処理
+    await db("menu_list")
+      .where("category", "=", "ごはん")
+      .update({ isWaiting: false });
+
+    res.status(200).json({ message: "isWaitingがセットされました。" });
+  } catch (error) {
+    res.status(500).json({ error: "データの更新に失敗しました。" });
+  }
+});
+
 app.put("/table/resetIsWaiting", async (req, res) => {
   try {
     // "ごはん"以外の項目のisWaitingをfalseに書き換える処理
@@ -99,6 +114,22 @@ app.put("/table/random", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: "データの更新に失敗しました。" });
+  }
+});
+
+app.post("/table/add", async (req, res) => {
+  try {
+    const { inputMenu, inputCategory } = req.body;
+    // データベースにレシピを追加する処理を実装する
+    await db("menu_list").insert({
+      menu: inputMenu,
+      category: inputCategory,
+      isWaiting: true,
+    });
+
+    res.status(200).json({ message: "レシピが追加されました。" });
+  } catch (error) {
+    res.status(500).json({ error: "レシピの追加に失敗しました。" });
   }
 });
 
