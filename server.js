@@ -117,13 +117,17 @@ app.put("/table/random", async (req, res) => {
   }
 });
 
+// const records = db("menu_list").select("id");
+// const newId = records + 1;
+
 app.post("/table/add", async (req, res) => {
   try {
-    const { inputMenu, inputCategory } = req.body;
+    console.log("入ってるよ！");
     // データベースにレシピを追加する処理を実装する
     await db("menu_list").insert({
-      menu: inputMenu,
-      category: inputCategory,
+      menu: req.body.menu,
+      category: req.body.category,
+      // id: newId,
       isWaiting: true,
     });
 

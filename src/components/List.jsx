@@ -73,7 +73,11 @@ const List = (props) => {
 
   //imageのリンクをる
   const getImageSource = (imageName) => {
-    return require(`../img/${imageName}.png`);
+    if (imageName === null) {
+      return require("../img/sample.png");
+    } else {
+      return require(`../img/${imageName}.png`);
+    }
   };
 
   const updateAPIData = (e) => {
@@ -153,10 +157,7 @@ const List = (props) => {
     props.allMenu.forEach((value) => {
       if (value.isWaiting === true) {
         //imageのリンクをimageSrcに入れる
-        const imageSrc =
-          getImageSource(value.image) !== undefined
-            ? getImageSource(value.image)
-            : "../img/sample.png";
+        const imageSrc = getImageSource(value.image);
         elementsArr.push(
           <div className="list" key={value.id}>
             <ul>
