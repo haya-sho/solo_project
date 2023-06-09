@@ -32,7 +32,7 @@ URL:https://choose-lunch-app.onrender.com
 
 ## 使用方法
 
-![利用方法簡易図](./image/Readme01.png)
+![利用方法簡易図](/src/img/Readme01.png)
 
 ## 利用技術
 
